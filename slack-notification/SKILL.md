@@ -11,7 +11,6 @@ Automate status updates to Slack when performing long-running deep learning or r
 ## Technical Implementation
 - **Script Path**: `scripts/slack-notify.sh`
 - **Execution**: Claude must call this script with a single string argument containing the formatted message.
-- **Dependency**: Ensure the script has execution permissions (`chmod +x`).
 
 ## Execution Protocol
 When sending a notification, Claude MUST:
