@@ -19,7 +19,7 @@ Generate commit message and execute commit automatically.
 git diff --cached --stat
 ```
 
-If empty, stop and tell user to `git add` first.
+If empty, proceed to **Auto-Split Workflow** below. Otherwise continue to Step 2.
 
 ### 2. Analyze Diff
 
@@ -57,6 +57,56 @@ git commit -m "type: subject" -m "body paragraph"
 ```
 
 For multi-line body, use multiple `-m` flags.
+
+## Auto-Split Workflow (when staging is empty)
+
+### A. Inspect All Changes
+
+```bash
+git status --short
+git diff --stat
+git diff
+```
+
+If no changes exist, tell the user there is nothing to commit and stop.
+
+### B. Classify Changes into Logical Work Units
+
+Analyze the diff and group files by logical purpose:
+- Group changes serving the same feature or goal into one commit
+- Assign a Conventional Commits type (feat/fix/refactor/test/chore/docs/etc.) to each group
+- Separate unrelated changes into distinct commits
+- Order commits by dependency (e.g., feat before test)
+
+### C. Present Split Plan to User and Confirm
+
+Use AskUserQuestion to present the proposed plan in this format and wait for approval:
+
+```
+Proposed commits:
+
+Commit 1: <type>: <subject>
+  Files: <file1>, <file2>
+
+Commit 2: <type>: <subject>
+  Files: <file3>
+...
+
+Proceed? Let me know if you'd like any changes.
+```
+
+Only proceed to Step D after the user approves.
+
+### D. Execute Commits in Order
+
+For each planned commit:
+```bash
+git add <files for this commit>
+git commit -m "type: subject" [-m "body"]
+```
+
+Apply the same Conventional Commits rules as Step 2/3.
+All General Rules (language, body preference) apply here as well.
 
 ## Examples
 
