@@ -14,21 +14,26 @@ This skill refactors Python source code to improve maintainability, type safety,
 - **Mandatory Use of `pathlib`**: Replace all occurrences of `os.path` and string-based path manipulations with `pathlib.Path` objects.
 - Ensure all file system operations (joining, checking existence, globbing) use `pathlib` methods.
 
-### 2. Structural Integrity (DRY Principle)
+### 2. Import Organization
+- **All imports must be at the top of the file**, immediately after the module docstring and any `__future__` imports. Never place `import` or `from ... import` statements inside functions, methods, or conditionals.
+- Exception: imports that must be deferred due to side-effect ordering (e.g., setting `os.environ` before an import that reads it at load time) should be placed as high as possible and accompanied by a comment explaining why.
+- Group imports in standard order: standard library → third-party → local, separated by blank lines.
+
+### 3. Structural Integrity (DRY Principle)
 - Identify and eliminate code duplication.
 - Extract repeated logic into reusable functions or methods.
 - Simplify complex conditional logic to enhance readability.
 
-### 3. Type Safety & Documentation
+### 4. Type Safety & Documentation
 - **Type Hinting**: Add comprehensive Python type hints to all function signatures and class variables. Use `typing` or built-in generic types (Python 3.9+).
 - **English Documentation**: All docstrings, comments, and log messages must be written in **English**. Follow the Google or NumPy docstring format.
 
-### 4. Modern Logging
+### 5. Modern Logging
 - **Migrate to `loguru`**: Replace standard `logging` or `print` statements with `loguru`.
 - Use appropriate log levels: `logger.info()`, `logger.debug()`, `logger.error()`, etc.
 - Remove old `import logging` statements.
 
-### 5. Automated Formatting & Linting
+### 6. Automated Formatting & Linting
 - Identify the project's package manager by checking for `uv.lock`/`pyproject.toml` or `pixi.toml`.
 - **Ruff Execution**: Run Ruff to fix linting issues and format the code.
   - If the project uses **uv**: Use `uvx ruff check --fix` and `uvx ruff format`.
