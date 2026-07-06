@@ -33,7 +33,12 @@ This skill refactors Python source code to improve maintainability, type safety,
 - Use appropriate log levels: `logger.info()`, `logger.debug()`, `logger.error()`, etc.
 - Remove old `import logging` statements.
 
-### 6. Automated Formatting & Linting
+### 6. Module Splitting for Oversized Files
+- **Consider splitting** a file into multiple modules when it grows too long (rough guideline: **~300 lines**). A single overlong file mixing several concerns is harder to navigate and test.
+- **Caveat — judge reusability before extracting**: Only split out code that is genuinely reusable or represents a cohesive, self-contained concern. Avoid carving out narrow, single-use modules just to reduce line count — a module that is only ever imported by one caller and has no general applicability usually belongs alongside that caller.
+- When in doubt about whether an extraction is worth it, keep the code in place or **ask the user** rather than creating a low-value module.
+
+### 7. Automated Formatting & Linting
 - Identify the project's package manager by checking for `uv.lock`/`pyproject.toml` or `pixi.toml`.
 - **Ruff Execution**: Run Ruff to fix linting issues and format the code.
   - If the project uses **uv**: Use `uvx ruff check --fix` and `uvx ruff format`.
