@@ -43,7 +43,21 @@ Conventional Commits format:
 <body>
 ```
 
-**Types:** feat, fix, docs, style, refactor, perf, test, chore
+**Types (with usage and examples):**
+
+| Type | When to use | Example |
+| --- | --- | --- |
+| `feat` | Add a **brand-new** feature or capability that did not exist before | `feat: add user search endpoint` |
+| `update` | **Improve or extend an existing** feature/behavior (not a bug fix, not brand-new) | `update: add module-splitting guideline to refactor-python skill` |
+| `fix` | Fix a bug or incorrect behavior | `fix: correct token expiration check` |
+| `docs` | Documentation only (README, comments, docstrings) | `docs: document env var setup in README` |
+| `style` | Formatting/whitespace/naming with no behavior change | `style: apply ruff formatting` |
+| `refactor` | Restructure code without changing external behavior | `refactor: extract path helpers into module` |
+| `perf` | Improve performance | `perf: cache SMPL-X model across batch` |
+| `test` | Add or update tests | `test: add cases for empty input` |
+| `chore` | Build, tooling, config, deps, housekeeping | `chore: ignore __pycache__` |
+
+**`feat` vs `update`**: use `feat` only when introducing something that did **not** exist before. If the functionality already exists and you are enhancing, extending, or tweaking it, use `update`.
 
 **Rules:**
 - Subject: imperative, lowercase, no period, ≤50 chars
@@ -74,7 +88,7 @@ If no changes exist, tell the user there is nothing to commit and stop.
 
 Analyze the diff and group files by logical purpose:
 - Group changes serving the same feature or goal into one commit
-- Assign a Conventional Commits type (feat/fix/refactor/test/chore/docs/etc.) to each group
+- Assign a type (feat/update/fix/refactor/test/chore/docs/etc.) to each group — see the **Types** table in Step 3 for when to use `feat` vs `update`
 - Separate unrelated changes into distinct commits
 - Order commits by dependency (e.g., feat before test)
 
