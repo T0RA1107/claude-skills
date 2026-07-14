@@ -9,8 +9,11 @@ description: Automates status updates to the user via Slack for time-consuming r
 Automate status updates to Slack when performing long-running deep learning or reinforcement learning tasks. This enables an asynchronous workflow, allowing the user to monitor experiment progress (e.g., from Gymnax or WebDataset processing) while away from the terminal.
 
 ## Technical Implementation
-- **Script Path**: `scripts/slack-notify.sh`
-- **Execution**: Claude must call this script with a single string argument containing the formatted message.
+Two transport options — pick by context:
+- **Interactive sessions**: Prefer the Slack MCP tool (`slack_send_message`, from the claude.ai Slack connector) when it is available — it supports threads, reactions, and richer operations without token management.
+- **Headless / job-embedded use** (training scripts, nohup jobs, hooks, cron — anywhere Claude is not in the loop, or the MCP connector is unavailable): use the script below. It authenticates with its own token in `scripts/.env`, fully independent of the Claude Slack app.
+  - **Script Path**: `scripts/slack-notify.sh`
+  - **Execution**: Call this script with a single string argument containing the formatted message.
 
 ## Execution Protocol
 When sending a notification, Claude MUST:
