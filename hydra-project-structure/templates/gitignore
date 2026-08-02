@@ -1,0 +1,20 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments (keep the lines matching the runner in use)
+.venv
+.pixi/
+
+# Hydra outputs
+outputs/
+multirun/
+.hydra/
+
+# Logs and experiments
+logs/
+wandb/

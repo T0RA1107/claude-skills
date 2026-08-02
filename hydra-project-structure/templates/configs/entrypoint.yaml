@@ -1,0 +1,36 @@
+# configs/<entrypoint>.yaml  <->  src/<entrypoint>.py
+# The file name must match the entry point module name (config_name="<entrypoint>").
+defaults:
+  # one line per swappable group: <singular group dir>: <default variant file>
+  - <group>: <default_variant>
+  - logger: loguru
+  - hydra: default
+  - _self_
+
+# Settings owned by the entry point itself (not by any component).
+<entrypoint>:
+  # e.g. num_episodes / num_epochs / eval_frequency ...
+  {}
+
+# Experiment tracking
+wandb:
+  enabled: false
+  project: "<project-name>"
+  entity: null  # set to your wandb username or leave null
+  name: "${hydra:runtime.choices.<group>}-${now:%Y%m%d_%H%M%S}"
+  tags: ["${hydra:runtime.choices.<group>}"]
+
+# Shared values referenced from group configs via ${seed}
+seed: 42
+
+profile: false
+
+# Expose Hydra's directories to the code; never hardcode paths.
+path:
+  work_dir: ${hydra:runtime.cwd}
+  run_dir: ${hydra:runtime.output_dir}
+  log_dir: "logs"
+  ckpt_dir: "ckpt"
+
+checkpoint:
+  save_frequency: 100

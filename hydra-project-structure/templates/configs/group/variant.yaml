@@ -1,0 +1,15 @@
+# configs/<group>/<variant>.yaml  <->  src/<group>s/<variant>.py
+# Selected with: uv run ./src/<entrypoint>.py <group>=<variant>
+_target_: src.<group>s.<variant>.<VariantClass>
+
+# Set when the component instantiates its own sub-configs internally.
+_recursive_: False
+
+# Hand a whole sibling group to this component instead of duplicating its keys.
+<sibling>_cfg: ${<sibling>}
+
+# Constructor arguments — every hyperparameter lives here, never in the code.
+<param>: <value>
+
+# Shared values are interpolated, never re-declared.
+seed: ${seed}
